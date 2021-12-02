@@ -65,7 +65,11 @@ def sliding_increases(list_of_depths):
 
     for i in range(len(list_of_depths)):
         try:
-            window_sum = list_of_depths[i] + list_of_depths[i+1] + list_of_depths[i+2]
+            window_sum = (
+                list_of_depths[i] + \
+                list_of_depths[i+1] + \
+                list_of_depths[i+2]
+                )
             window_sums.append(window_sum)
 
         except IndexError:
