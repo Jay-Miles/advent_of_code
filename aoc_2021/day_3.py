@@ -84,22 +84,22 @@ def get_input(input_file):
     with open(input_file, 'r') as file_object:
         file_contents = file_object.readlines()
 
-    data_to_analyse = [line.strip() for line in file_contents]
+    binary_numbers = [line.strip() for line in file_contents]
 
-    return data_to_analyse
+    return binary_numbers
 
 
-def some_function(data_to_analyse):
+def get_gamma_and_epsilon(binary_numbers):
 
     binary_gamma_rate = ''
     binary_epsilon_rate = ''
 
     position_strings = []
 
-    for position in range(len(data_to_analyse[0])):
+    for position in range(len(binary_numbers[0])):
         position_strings.append('')
 
-    for line in data_to_analyse:
+    for line in binary_numbers:
         for position in range(len(position_strings)):
             position_strings[position] += line[position]
 
@@ -128,12 +128,12 @@ def some_function(data_to_analyse):
     return output_value
 
 
-def some_other_function(data_to_analyse):
+def get_o2_and_co2(binary_numbers):
 
-    oxygen_list = data_to_analyse
-    co2_list = data_to_analyse
+    oxygen_list = binary_numbers
+    co2_list = binary_numbers
 
-    string_length = len(data_to_analyse[0])
+    string_length = len(binary_numbers[0])
 
     for position in range(string_length):
 
@@ -195,10 +195,10 @@ def main():
     args = parser.parse_args()
 
     input_file = args.input_file
-    data_to_analyse = get_input(input_file)
+    binary_numbers = get_input(input_file)
 
-    #output_value = some_function(data_to_analyse)
-    output_value = some_other_function(data_to_analyse)
+    #output_value = get_gamma_and_epsilon(binary_numbers)
+    output_value = get_o2_and_co2(binary_numbers)
 
     print(output_value)
 

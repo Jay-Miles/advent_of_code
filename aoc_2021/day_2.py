@@ -51,22 +51,22 @@ def get_input(input_file):
     with open(input_file, 'r') as file_object:
         file_contents = file_object.readlines()
 
-    data_to_analyse = []
+    instructions_list = []
 
     for line in file_contents:
         line_contents = line.split(' ')
-        data_to_analyse.append((line_contents[0], int(line_contents[1])))
+        instructions_list.append((line_contents[0], int(line_contents[1])))
 
-    return data_to_analyse
+    return instructions_list
 
 
-def some_function(data_to_analyse):
+def find_position(instructions_list):
 
     horizontal = 0
     depth = 0
     aim = 0
 
-    for tuple in data_to_analyse:
+    for tuple in instructions_list:
         if tuple[0] == 'forward':
             horizontal += tuple[1]
             depth += (tuple[1] * aim)
@@ -89,8 +89,8 @@ def main():
     args = parser.parse_args()
 
     input_file = args.input_file
-    data_to_analyse = get_input(input_file)
-    output_value = some_function(data_to_analyse)
+    instructions_list = get_input(input_file)
+    output_value = find_position(instructions_list)
 
     print(output_value)
 
