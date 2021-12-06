@@ -63,42 +63,11 @@ To find CO2 scrubber rating, determine the least common value (0 or 1) in
 the current bit position, and keep only numbers with that bit in that
 position. If 0 and 1 are equally common, keep values with a 0 in the
 position being considered.
-For example, to determine the oxygen generator rating value using the same
-example diagnostic report from above:
 
-Start with all 12 numbers and consider only the first bit of each number.
-There are more 1 bits (7) than 0 bits (5), so keep only the 7 numbers with a
-1 in the first position: 11110, 10110, 10111, 10101, 11100, 10000, and
-11001.
-Then, consider the second bit of the 7 remaining numbers: there are more 0
-bits (4) than 1 bits (3), so keep only the 4 numbers with a 0 in the second
-position: 10110, 10111, 10101, and 10000.
-In the third position, three of the four numbers have a 1, so keep those
-three: 10110, 10111, and 10101.
-In the fourth position, two of the three numbers have a 1, so keep those
-two: 10110 and 10111.
-In the fifth position, there are an equal number of 0 bits and 1 bits (one
-each). So, to find the oxygen generator rating, keep the number with a 1 in
-that position: 10111.
-As there is only one number left, stop; the oxygen generator rating is
-10111, or 23 in decimal.
-Then, to determine the CO2 scrubber rating value from the same example
-above:
-
-Start again with all 12 numbers and consider only the first bit of each
-number. There are fewer 0 bits (5) than 1 bits (7), so keep only the 5
-numbers with a 0 in the first position: 00100, 01111, 00111, 00010, and
-01010.
-Then, consider the second bit of the 5 remaining numbers: there are fewer 1
-bits (2) than 0 bits (3), so keep only the 2 numbers with a 1 in the second
-position: 01111 and 01010.
-In the third position, there are an equal number of 0 bits and 1 bits (one
-each). So, to find the CO2 scrubber rating, keep the number with a 0 in that
-position: 01010.
-As there is only one number left, stop; the CO2 scrubber rating is 01010, or
-10 in decimal.
-Finally, to find the life support rating, multiply the oxygen generator
-rating (23) by the CO2 scrubber rating (10) to get 230.
+Example values:
+oxygen generator rating = 23
+CO2 scrubber rating = 10
+product = 230
 
 Use the binary numbers in your diagnostic report to calculate the oxygen
 generator rating and CO2 scrubber rating, then multiply them together. What
@@ -124,7 +93,6 @@ def some_function(data_to_analyse):
 
     binary_gamma_rate = ''
     binary_epsilon_rate = ''
-
 
     position_strings = []
 
@@ -160,6 +128,66 @@ def some_function(data_to_analyse):
     return output_value
 
 
+def some_other_function(data_to_analyse):
+
+    oxygen_list = data_to_analyse
+    co2_list = data_to_analyse
+
+    string_length = len(data_to_analyse[0])
+
+    for position in range(string_length):
+
+        oxygen_string = ''
+        for element in oxygen_list:
+            oxygen_string += element[position]
+
+        if (oxygen_string.count('0') > oxygen_string.count('1')) and \
+            (len(oxygen_list) > 1):
+
+            oxygen_list = [
+                element for element in oxygen_list if element[position] == '0'
+                ]
+
+        elif ((oxygen_string.count('1') > oxygen_string.count('0')) or \
+            (oxygen_string.count('1') == oxygen_string.count('0'))) and \
+            (len(oxygen_list) > 1):
+
+            oxygen_list = [
+                element for element in oxygen_list if element[position] == '1'
+                ]
+
+        co2_string = ''
+        for element in co2_list:
+            co2_string += element[position]
+
+        if (co2_string.count('0') > co2_string.count('1')) and \
+            (len(co2_list) > 1):
+
+            co2_list = [
+                element for element in co2_list if element[position] == '1'
+                ]
+
+        elif ((co2_string.count('1') > co2_string.count('0')) or \
+            (co2_string.count('1') == co2_string.count('0'))) and \
+            (len(co2_list) > 1):
+
+            co2_list = [
+                element for element in co2_list if element[position] == '0'
+                ]
+
+    if (len(oxygen_list) == 1) and (len(co2_list) == 1):
+        oxygen = int(oxygen_list[0], 2)
+        co2 = int(co2_list[0], 2)
+
+        output_value = oxygen * co2
+        return output_value
+
+    else:
+        print('Something went wrong.')
+        print('oxygen_list: {a}'.format(a=oxygen_list))
+        print('co2_list: {a}'.format(a=co2_list))
+
+
 def main():
 
     parser = argparse.ArgumentParser()
@@ -168,7 +196,9 @@ def main():
 
     input_file = args.input_file
     data_to_analyse = get_input(input_file)
-    output_value = some_function(data_to_analyse)
+
+    #output_value = some_function(data_to_analyse)
+    output_value = some_other_function(data_to_analyse)
 
     print(output_value)
 
