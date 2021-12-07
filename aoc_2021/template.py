@@ -13,14 +13,14 @@ def get_input(input_file):
     with open(input_file, 'r') as file_object:
         file_contents = file_object.readlines()
 
-    data_to_analyse = 
+    data_to_analyse = "I haven't defined the input data yet"
 
     return data_to_analyse
 
 
 def some_function(data_to_analyse):
 
-    output_value = 
+    output_value = "I haven't set an output value yet"
 
     return output_value
 
